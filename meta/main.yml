@@ -1,0 +1,22 @@
+---
+galaxy_info:
+  author: Sergey Brovko
+  description: Preconfiguration for RHEL based systems
+  issue_tracker_url: https://github.com/cyber01/ansible-preconf
+  license: license (BSD, MIT)
+  min_ansible_version: 2.4
+  platforms:
+  - name: EL
+    versions:
+    - 7
+  - name: Fedora
+    versions:
+    - 27
+  galaxy_tags:
+    - preconf
+    - ipv6
+    - upgrade
+    - hostname
+    - firewalld
+dependencies: []
+allow_duplicates: true

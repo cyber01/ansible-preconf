@@ -1,0 +1,9 @@
+---
+# defaults file for preconf_centos
+upgrade_all: true
+install_epel: true
+start_soft: true
+init_firewalld: true
+change_hostname: true
+hostname: "localhost.localdomain"
+disable_ipv6: true

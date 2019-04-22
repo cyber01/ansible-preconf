@@ -1,0 +1,64 @@
+---
+# tasks file for preconf_centos
+- name: Upgrade all packages
+  yum:
+    name: '*'
+    state: latest
+  when: upgrade_all
+
+- name: EPEL install
+  yum: 
+    name: epel-release 
+    state: latest
+  when: install_epel
+    
+- name: Start soft
+  yum: 
+    name: "{{packages}}"
+    state: installed
+  vars:
+    packages:
+    - vim
+    - net-tools
+    - bind-utils
+    - rsync
+    - wget
+    - pwgen
+    - screen
+    - git
+    - zip
+    - unzip
+    - iotop
+    - jnettop
+    - psmisc
+  when: start_soft and install_epel
+
+- name: Started firewalld
+  systemd:
+    name: firewalld
+    enabled: yes
+    state: started
+  when: init_firewalld
+
+- hostname:
+    name: '{{hostname}}'
+  when: change_hostname
+
+- name: Sysctl config
+  sysctl:
+    name: kernel.hostname
+    value: '{{ hostname }}'
+    sysctl_file: /etc/sysctl.conf
+    reload: yes
+  when: change_hostname
+
+- name: Sysctl config
+  sysctl:
+    name: '{{ item.name }}'
+    value: '{{ item.value }}'
+    sysctl_file: /etc/sysctl.conf
+    reload: yes
+  with_items:
+    - { name: 'net.ipv6.conf.all.disable_ipv6', value: '1' }
+    - { name: 'net.ipv6.conf.all.autoconf', value: '0' }
+  when: disable_ipv6
