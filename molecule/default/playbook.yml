@@ -1,0 +1,20 @@
+---
+- name: Converge
+  hosts: all
+  pre_tasks:
+    - name: "Installing packages on CentOS family"
+      package:
+        pkg:
+          - net-tools
+          - which
+        state: present
+
+  roles:
+    - role: preconf_centos
+      hostname: 'test123.ru'
+      upgrade_all: false
+      install_epel: false
+      start_soft: false
+      init_firewalld: false
+      change_hostname: true
+      disable_ipv6: false

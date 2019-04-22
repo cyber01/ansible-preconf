@@ -1,0 +1,21 @@
+---
+sudo: required
+language: python
+services:
+  - docker
+
+install:
+  - pip install ansible==2.7.10
+  - pip install ansible-lint==4.1.0
+  - pip install docker==3.7.2
+  - pip install molecule==2.20.1
+  - pip install netaddr==0.7.19
+  - pip install testinfra==1.19.0
+
+script:
+  - molecule --version
+  - ansible --version
+  - molecule test
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/
