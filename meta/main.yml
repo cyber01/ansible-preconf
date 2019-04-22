@@ -18,5 +18,9 @@ galaxy_info:
     - upgrade
     - hostname
     - firewalld
+    - system
+    - networking
+    - packagig
+    - security
 dependencies: []
 allow_duplicates: true
