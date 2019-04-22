@@ -12,9 +12,9 @@
     state: latest
   when: install_epel
     
-- name: Start soft
+- name: Install start soft
   yum: 
-    name: "{{packages}}"
+    name: "{{ packages }}"
     state: installed
   vars:
     packages:
@@ -33,18 +33,19 @@
     - psmisc
   when: start_soft and install_epel
 
-- name: Started firewalld
+- name: Init firewalld
   systemd:
     name: firewalld
     enabled: yes
     state: started
   when: init_firewalld
 
-- hostname:
-    name: '{{hostname}}'
+- name: Change hostname system-wide
+  hostname:
+    name: '{{ hostname }}'
   when: change_hostname
 
-- name: Sysctl config
+- name: Change hostname in sysctl
   sysctl:
     name: kernel.hostname
     value: '{{ hostname }}'
@@ -52,7 +53,7 @@
     reload: yes
   when: change_hostname
 
-- name: Sysctl config
+- name: Disable IPv6 in sysctl
   sysctl:
     name: '{{ item.name }}'
     value: '{{ item.value }}'
