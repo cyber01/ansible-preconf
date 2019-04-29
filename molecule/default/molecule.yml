@@ -10,7 +10,7 @@ lint:
 
 platforms:
   - name: instance
-    image: cyber01/ansible-docker-${MOLECULE_DISTRO:-centos7}
+    image: cyber01/ansible-docker-${MOLECULE_DISTRO}
     command: ${MOLECULE_DOCKER_COMMAND:-"sleep infinity"}
     privileged: true
     pre_build_image: true
