@@ -39,14 +39,14 @@
   yum:
     name: firewalld
     state: present
-  when: init_firewalld
+  when: init_firewalld and ansible_os_family == "RedHat" and ansible_distribution_major_version != "6"
 
 - name: Start and Enable firewalld
   systemd:
     name: firewalld
     enabled: true
     state: started
-  when: init_firewalld
+  when: init_firewalld and ansible_os_family == "RedHat" and ansible_distribution_major_version != "6"
 
 - name: Change hostname system-wide
   hostname:
