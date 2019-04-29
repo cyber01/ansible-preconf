@@ -60,7 +60,7 @@
     value: '{{ hostname }}'
     sysctl_file: /etc/sysctl.conf
     reload: true
-  when: change_hostname
+  when: change_hostname and ansible_os_family == "RedHat" and ansible_distribution_major_version != "6"
 
 - name: Disable IPv6 in sysctl
   sysctl:
@@ -71,4 +71,4 @@
   with_items:
     - { name: 'net.ipv6.conf.all.disable_ipv6', value: '1' }
     - { name: 'net.ipv6.conf.all.autoconf', value: '0' }
-  when: disable_ipv6
+  when: disable_ipv6 and ansible_os_family == "RedHat" and ansible_distribution_major_version != "6"
