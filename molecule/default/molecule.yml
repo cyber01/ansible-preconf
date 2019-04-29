@@ -10,10 +10,12 @@ lint:
 
 platforms:
   - name: instance
-    image: cyber01/ansible-docker-${MOLECULE_DISTRO}
-    command: ${MOLECULE_DOCKER_COMMAND:-"sleep infinity"}
+    image: "cyber01/ansible-docker-${MOLECULE_DISTRO}:latest"
+    command: ${MOLECULE_DOCKER_COMMAND:-""}
     privileged: true
     pre_build_image: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
 
 provisioner:
   name: ansible

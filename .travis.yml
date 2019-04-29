@@ -10,16 +10,10 @@ env:
   matrix:
     - MOLECULE_DISTRO: centos7
     - MOLECULE_DISTRO: centos6
-      MOLECULE_DOCKER_COMMAND: /usr/lib/systemd/systemd
 
 
 install:
-  - pip install ansible
-  - pip install ansible-lint
-  - pip install docker
-  - pip install molecule
-  - pip install netaddr
-  - pip install testinfra
+  - pip install ansible ansible-lint docker molecule netaddr testinfra
 
 before_script:
   # Use actual Ansible Galaxy role name for the project directory.
