@@ -5,11 +5,13 @@
     name: '*'
     state: latest
   when: upgrade_all
+  tags:
+    - skip_ansible_lint
 
 - name: EPEL install
   yum:
     name: epel-release
-    state: latest
+    state: present
   when: install_epel
 
 - name: Install start soft
@@ -18,25 +20,31 @@
     state: installed
   vars:
     packages:
-    - vim
-    - net-tools
-    - bind-utils
-    - rsync
-    - wget
-    - pwgen
-    - screen
-    - git
-    - zip
-    - unzip
-    - iotop
-    - jnettop
-    - psmisc
+      - vim
+      - net-tools
+      - bind-utils
+      - rsync
+      - wget
+      - pwgen
+      - screen
+      - git
+      - zip
+      - unzip
+      - iotop
+      - jnettop
+      - psmisc
   when: start_soft and install_epel
 
-- name: Init firewalld
+- name: Install firewalld
+  yum:
+    name: firewalld
+    state: present
+  when: init_firewalld
+
+- name: Start and Enable firewalld
   systemd:
     name: firewalld
-    enabled: yes
+    enabled: true
     state: started
   when: init_firewalld
 
@@ -44,13 +52,14 @@
   hostname:
     name: '{{ hostname }}'
   when: change_hostname
+  ignore_errors: true
 
 - name: Change hostname in sysctl
   sysctl:
     name: kernel.hostname
     value: '{{ hostname }}'
     sysctl_file: /etc/sysctl.conf
-    reload: yes
+    reload: true
   when: change_hostname
 
 - name: Disable IPv6 in sysctl
@@ -58,7 +67,7 @@
     name: '{{ item.name }}'
     value: '{{ item.value }}'
     sysctl_file: /etc/sysctl.conf
-    reload: yes
+    reload: true
   with_items:
     - { name: 'net.ipv6.conf.all.disable_ipv6', value: '1' }
     - { name: 'net.ipv6.conf.all.autoconf', value: '0' }

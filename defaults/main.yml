@@ -5,5 +5,5 @@ install_epel: true
 start_soft: true
 init_firewalld: true
 change_hostname: true
-hostname: "localhost.localdomain"
+hostname: "example.com"
 disable_ipv6: true

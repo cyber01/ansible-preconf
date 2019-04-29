@@ -1,5 +1,6 @@
 # Ansible Role: Preconf
 
+Can be used for preconf all RHEL-based servers
 
 Upgrades all packages, install EPEL, start apps, change hostname, init firewalld, disable ipv6.
 

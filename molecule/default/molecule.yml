@@ -5,36 +5,24 @@ driver:
   name: docker
 lint:
   name: yamllint
+  options:
+    config-file: molecule/default/yaml-lint.yml
 
 platforms:
-  - name: preconf_centos
-    image: milcom/centos7-systemd:latest
-    groups:
-      - group1
-    privileged: True
-  - name: preconf_fedora
-    image: jrei/systemd-fedora:latest
-    command: /sbin/init
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    groups:
-      - group1
-    privileged: True
+  - name: instance
+    image: cyber01/ansible-docker-${MOLECULE_DISTRO:-centos7}
+    command: ${MOLECULE_DOCKER_COMMAND:-"sleep infinity"}
+    privileged: true
+    pre_build_image: true
 
 provisioner:
   name: ansible
   lint:
     name: ansible-lint
-
+  playbooks:
+    converge: ${MOLECULE_PLAYBOOK:-playbook.yml}
 scenario:
   name: default
-  test_sequence:
-    - lint
-    - destroy
-    - create
-    - converge
-    - verify
-    - destroy
 verifier:
   name: testinfra
   lint:
