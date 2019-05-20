@@ -31,7 +31,6 @@
       - zip
       - unzip
       - iotop
-      - jnettop
       - psmisc
   when: start_soft and install_epel
 
@@ -52,7 +51,7 @@
   hostname:
     name: '{{ hostname }}'
   when: change_hostname
-  ignore_errors: true
+  #ignore_errors: true
 
 - name: Change hostname in sysctl
   sysctl:

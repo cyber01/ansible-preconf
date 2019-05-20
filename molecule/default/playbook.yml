@@ -2,15 +2,7 @@
 - name: Converge
   hosts: all
   become: true
-
-  vars:
-    hostname: 'example.com'
-    upgrade_all: true
-    install_epel: true
-    start_soft: true
-    init_firewalld: true
-    change_hostname: true
-    disable_ipv6: true
+  any_errors_fatal: true
 
   roles:
-    - role: cyber01.preconf
+    - cyber01.preconf
