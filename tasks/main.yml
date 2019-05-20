@@ -51,7 +51,6 @@
   hostname:
     name: '{{ hostname }}'
   when: change_hostname
-  #ignore_errors: true
 
 - name: Change hostname in sysctl
   sysctl:
