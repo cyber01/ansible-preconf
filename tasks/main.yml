@@ -8,11 +8,17 @@
   tags:
     - skip_ansible_lint
 
-- name: EPEL install
+- name: EPEL install RHEL 7
   yum:
     name: epel-release
     state: present
-  when: install_epel | bool
+  when: install_epel | bool and ansible_distribution == "RedHat"
+
+- name: EPEL install Fedora
+  yum:
+    name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+    state: present
+  when: install_epel | bool and ansible_distribution == "Fedora"
 
 - name: Install start soft
   yum:
