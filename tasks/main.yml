@@ -8,36 +8,16 @@
   tags:
     - skip_ansible_lint
 
-- name: EPEL install RHEL 7
+- name: EPEL install CentOS 7 / RHEL 7
   yum:
     name: epel-release
     state: present
-  when: install_epel | bool and ansible_distribution == "RedHat"
-
-- name: EPEL install Fedora
-  yum:
-    name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-    state: present
-  when: install_epel | bool and ansible_distribution == "Fedora"
+  when: install_epel | bool and (ansible_distribution == "CentOS" or ansible_distribution == "RedHat") and ansible_distribution_major_version == "7"
 
 - name: Install start soft
   yum:
-    name: "{{ packages }}"
+    name: "{{ preconf_packages | list }}"
     state: installed
-  vars:
-    packages:
-      - vim
-      - net-tools
-      - bind-utils
-      - rsync
-      - wget
-      - pwgen
-      - screen
-      - git
-      - zip
-      - unzip
-      - iotop
-      - psmisc
   when: start_soft | bool and install_epel | bool
 
 - name: Install firewalld
@@ -56,7 +36,8 @@
 - name: Change hostname system-wide
   hostname:
     name: '{{ hostname }}'
-  when: change_hostname | bool
+  # Hostname is not changing in docker
+  when: change_hostname | bool and ansible_virtualization_type != "docker"
 
 - name: Change hostname in sysctl
   sysctl:

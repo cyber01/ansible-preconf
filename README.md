@@ -20,6 +20,22 @@ Installs EPEL repo in system if `true`.
 
     start_soft: true   
 
+Will be installed packages:
+
+    preconf_packages:
+      - vim
+      - net-tools
+      - bind-utils
+      - rsync
+      - wget
+      - pwgen
+      - screen
+      - git
+      - zip
+      - unzip
+      - iotop
+      - psmisc
+
 Installs start software in system (vim,net-tools,bind-utils,rsync,wget,pwgen,screen,git,zip,unzip,iotop,jnettop,psmisc) if `true` and if `install_epel` is `true`.
 
     init_firewalld: true

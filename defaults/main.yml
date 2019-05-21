@@ -7,3 +7,16 @@ init_firewalld: true
 change_hostname: true
 hostname: "example.com"
 disable_ipv6: true
+preconf_packages:
+  - vim
+  - net-tools
+  - bind-utils
+  - rsync
+  - wget
+  - pwgen
+  - screen
+  - git
+  - zip
+  - unzip
+  - iotop
+  - psmisc
